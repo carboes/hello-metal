@@ -103,14 +103,21 @@ Works on both **iOS and Android**. The app runs fully in Expo Go — navigation,
 ## Project structure
 
 ```
-├── App.tsx              # Root component — navigation container + stack
-├── index.ts             # Entry point
-├── theme.ts             # Light/dark color tokens
-├── babel.config.js      # Babel config with react-native-worklets plugin
+├── App.tsx                        # Root — navigation container + stack + error boundary
+├── index.ts                       # Entry point
+├── theme.ts                       # Light/dark color tokens
+├── constants.ts                   # API endpoints and app-wide constants
+├── babel.config.js                # Babel config with react-native-worklets plugin
 ├── screens/
-│   ├── Home.tsx         # Hello Metal button + DOG button with animations
-│   └── Dog.tsx          # Random dog image fetched from dog.ceo API
-├── app.json             # Expo app config
+│   ├── Home.tsx                   # Hello Metal button + DOG button
+│   └── Dog.tsx                    # Random dog image screen
+├── hooks/
+│   ├── useButtonAnimStyles.ts     # Stagger + press animation logic for home buttons
+│   └── useDogImage.ts             # Fetch state for random dog image
+├── components/
+│   └── ErrorBoundary.tsx          # Top-level error boundary fallback UI
+├── assets/                        # Icons, splash screen
+├── app.json                       # Expo app config
 └── package.json
 ```
 
