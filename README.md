@@ -11,16 +11,21 @@ A pre-built Android APK is available to install directly:
 
 **[Download Android Preview Build](https://expo.dev/accounts/carboes/projects/hello-metal/builds/739d795c-6a60-48c8-afd7-a7c53d3f8a95)**
 
+Or scan the QR code to open the build page on your device:
+
+![Android Preview Build QR Code](./qrcode.png)
+
 ### Video showing development
 
 **[Google Drive Folder Link](https://drive.google.com/drive/folders/1XF6ik5rEGvLyPMVAI4H8PJQhJ1rqapEd?usp=drive_link)**
 
-###
-Bonus work done
+### Bonus work done
+- iOS working on simulator
 - App Icon
+- Light + Dark mode (according to System settings)
 - Simple animations for Buttons on home screen
 - Linting/prettier
-- Additional TODO work in [TODO.md](./TODO.md)
+- Future work in [TODO.md](./TODO.md)
 
 ## Prerequisites
 
@@ -37,9 +42,14 @@ Bonus work done
 
 A development build is the preferred way to run this app. It includes all native modules (Reanimated 4, haptics) and gives you the full experience.
 
-
-
 ### Build from source
+
+```bash
+npm install
+npx expo run:android
+```
+
+Requires Android Studio with at least one AVD (emulator) set up, or a physical device connected via USB with developer mode enabled.
 
 **iOS**
 
@@ -55,13 +65,6 @@ npx expo run:ios --device
 ```
 
 **Android**
-
-```bash
-npm install
-npx expo run:android
-```
-
-Requires Android Studio with at least one AVD (emulator) set up, or a physical device connected via USB with developer mode enabled.
 
 **EAS cloud build**
 
