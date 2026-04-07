@@ -3,19 +3,51 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Haptics from 'expo-haptics';
 import { useMemo } from 'react';
 import { Alert, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated, {
+  FadeInDown,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 
 import type { RootStackParamList } from '../App';
 import { colors } from '../theme';
 
 type HomeNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+type ActiveButton = 'hello' | 'dog' | null;
 
 export default function Home() {
   const navigation = useNavigation<HomeNavigationProp>();
   const scheme = useColorScheme() ?? 'light';
   const c = colors[scheme];
-
   const styles = useMemo(() => makeStyles(c), [c]);
+
+  const activeButton = useSharedValue<ActiveButton>(null);
+
+  const helloAnimStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        scale: withSpring(activeButton.value === 'hello' ? 1.1 : 1, {
+          damping: 12,
+          stiffness: 200,
+        }),
+      },
+    ],
+    opacity: withTiming(activeButton.value === 'dog' ? 0.2 : 1, { duration: 180 }),
+  }));
+
+  const dogAnimStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        scale: withSpring(activeButton.value === 'dog' ? 1.1 : 1, {
+          damping: 12,
+          stiffness: 200,
+        }),
+      },
+    ],
+    opacity: withTiming(activeButton.value === 'hello' ? 0.2 : 1, { duration: 180 }),
+  }));
 
   const handleHelloPress = async () => {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -28,22 +60,36 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Animated.View entering={FadeInDown.delay(100).springify().damping(14).stiffness(120)}>
+      <Animated.View
+        entering={FadeInDown.delay(100).springify().damping(14).stiffness(120)}
+        style={helloAnimStyle}
+      >
         <Pressable
-          style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+          style={styles.button}
+          onPressIn={() => {
+            activeButton.value = 'hello';
+          }}
+          onPressOut={() => {
+            activeButton.value = null;
+          }}
           onPress={handleHelloPress}
         >
           <Text style={styles.buttonText}>Hello Metal</Text>
         </Pressable>
       </Animated.View>
 
-      <Animated.View entering={FadeInDown.delay(250).springify().damping(14).stiffness(120)}>
+      <Animated.View
+        entering={FadeInDown.delay(250).springify().damping(14).stiffness(120)}
+        style={dogAnimStyle}
+      >
         <Pressable
-          style={({ pressed }) => [
-            styles.button,
-            styles.dogButton,
-            pressed && styles.buttonPressed,
-          ]}
+          style={[styles.button, styles.dogButton]}
+          onPressIn={() => {
+            activeButton.value = 'dog';
+          }}
+          onPressOut={() => {
+            activeButton.value = null;
+          }}
           onPress={handleDogPress}
         >
           <Text style={[styles.buttonText, styles.dogButtonText]}>DOG</Text>
@@ -75,10 +121,6 @@ function makeStyles(c: (typeof colors)['light' | 'dark']) {
     },
     dogButton: {
       backgroundColor: c.dogButton,
-    },
-    buttonPressed: {
-      opacity: 0.75,
-      transform: [{ scale: 0.97 }],
     },
     buttonText: {
       color: c.primaryButtonText,
