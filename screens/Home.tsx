@@ -1,14 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Haptics from 'expo-haptics';
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useMemo } from 'react';
+import { Alert, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 import type { RootStackParamList } from '../App';
+import { colors } from '../theme';
 
 type HomeNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function Home() {
   const navigation = useNavigation<HomeNavigationProp>();
+  const scheme = useColorScheme() ?? 'light';
+  const c = colors[scheme];
+
+  const styles = useMemo(() => makeStyles(c), [c]);
 
   const handleHelloPress = async () => {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -32,42 +38,47 @@ export default function Home() {
         style={({ pressed }) => [styles.button, styles.dogButton, pressed && styles.buttonPressed]}
         onPress={handleDogPress}
       >
-        <Text style={styles.buttonText}>DOG</Text>
+        <Text style={[styles.buttonText, styles.dogButtonText]}>DOG</Text>
       </Pressable>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 16,
-  },
-  button: {
-    backgroundColor: '#1a1a1a',
-    paddingVertical: 16,
-    paddingHorizontal: 40,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 6,
-  },
-  dogButton: {
-    backgroundColor: '#b45309',
-  },
-  buttonPressed: {
-    opacity: 0.75,
-    transform: [{ scale: 0.97 }],
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '700',
-    letterSpacing: 1,
-  },
-});
+function makeStyles(c: (typeof colors)['light' | 'dark']) {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: c.background,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 16,
+    },
+    button: {
+      backgroundColor: c.primaryButton,
+      paddingVertical: 16,
+      paddingHorizontal: 40,
+      borderRadius: 12,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 6,
+      elevation: 6,
+    },
+    dogButton: {
+      backgroundColor: c.dogButton,
+    },
+    buttonPressed: {
+      opacity: 0.75,
+      transform: [{ scale: 0.97 }],
+    },
+    buttonText: {
+      color: c.primaryButtonText,
+      fontSize: 18,
+      fontWeight: '700',
+      letterSpacing: 1,
+    },
+    dogButtonText: {
+      color: c.dogButtonText,
+    },
+  });
+}
