@@ -25,4 +25,4 @@ export const colors = {
   },
 } as const;
 
-export type Colors = typeof colors.light;
+export type Colors = { [K in keyof typeof colors.light]: string };
