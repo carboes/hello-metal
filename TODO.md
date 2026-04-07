@@ -19,4 +19,5 @@
 ## Distribution
 
 - [ ] Trigger a new EAS build and update the Android preview link in `README.md`
+- [ ] Create an iOS build on Expo and add the link to `README.md`
 - [ ] Upload build video files to Google Drive (shared with anyone with the link) and add the link to `README.md`

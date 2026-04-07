@@ -57,9 +57,11 @@ eas build --profile development --platform android
 
 ---
 
-## Option 2 — Expo Go (limited)
+## Option 2 — Expo Go
 
-> ⚠️ **Animations do not work in Expo Go.** The app uses Reanimated 4 which requires native modules that Expo Go does not bundle. Use a development build for the full experience.
+Works on both **iOS and Android**. The app runs fully in Expo Go — navigation, haptics, dog images, and light/dark mode all work.
+
+> **Note:** Button animations (Reanimated 4) are not supported in Expo Go and will be skipped. Use a development build for the full animated experience.
 
 1. **Install dependencies**
 
@@ -104,7 +106,7 @@ eas build --profile development --platform android
 
 ## Notes
 
-- **Animations** require a development build. Reanimated 4 + `react-native-worklets` are not supported in Expo Go.
+- **Animations** require a development build. Reanimated 4 + `react-native-worklets` are not supported in Expo Go — all other features work fine in Expo Go on iOS and Android.
 - **Haptics** only work on physical devices. Calls are silently ignored on simulators/emulators.
 - The app supports **light and dark mode** automatically from system settings.
 - The app uses React Navigation native stack, so iOS users get native header transitions out of the box.
