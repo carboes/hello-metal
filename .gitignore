@@ -42,3 +42,4 @@ yarn-error.*
 
 build-*.apk
 build-*.ipa
+build-*.tar.gz
