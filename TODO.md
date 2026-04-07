@@ -15,3 +15,8 @@
 
 - [ ] Add unit and integration tests with [Jest](https://jestjs.io/)
 - [ ] Add end-to-end tests with [Maestro](https://maestro.mobile.dev/)
+
+## Distribution
+
+- [ ] Trigger a new EAS build and update the Android preview link in `README.md`
+- [ ] Upload build video files to Google Drive (shared with anyone with the link) and add the link to `README.md`
