@@ -3,6 +3,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Haptics from 'expo-haptics';
 import { useMemo } from 'react';
 import { Alert, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import type { RootStackParamList } from '../App';
 import { colors } from '../theme';
@@ -27,19 +28,27 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Pressable
-        style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
-        onPress={handleHelloPress}
-      >
-        <Text style={styles.buttonText}>Hello Metal</Text>
-      </Pressable>
+      <Animated.View entering={FadeInDown.delay(100).springify().damping(14).stiffness(120)}>
+        <Pressable
+          style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+          onPress={handleHelloPress}
+        >
+          <Text style={styles.buttonText}>Hello Metal</Text>
+        </Pressable>
+      </Animated.View>
 
-      <Pressable
-        style={({ pressed }) => [styles.button, styles.dogButton, pressed && styles.buttonPressed]}
-        onPress={handleDogPress}
-      >
-        <Text style={[styles.buttonText, styles.dogButtonText]}>DOG</Text>
-      </Pressable>
+      <Animated.View entering={FadeInDown.delay(250).springify().damping(14).stiffness(120)}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            styles.dogButton,
+            pressed && styles.buttonPressed,
+          ]}
+          onPress={handleDogPress}
+        >
+          <Text style={[styles.buttonText, styles.dogButtonText]}>DOG</Text>
+        </Pressable>
+      </Animated.View>
     </View>
   );
 }
