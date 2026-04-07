@@ -8,7 +8,7 @@ A minimal React Native app built with Expo. Features a Hello Metal button with h
 
 A pre-built Android APK is available to install directly:
 
-**[Download Android Preview Build](https://expo.dev/accounts/carboes/projects/hello-metal/builds/739d795c-6a60-48c8-afd7-a7c53d3f8a95)**
+**[Download Android Preview Build](https://expo.dev/accounts/carboes/projects/hello-metal/builds/60c2fa46-0667-465d-ac95-b042c2c781e9)**
 
 Or scan the QR code to open the build page on your device:
 
