@@ -10,12 +10,30 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
 
 import type { RootStackParamList } from '../App';
+import type { Colors } from '../theme';
 import { colors } from '../theme';
 
 type HomeNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 type ActiveButton = 'hello' | 'dog' | null;
+
+function useButtonAnimStyle(key: ActiveButton, activeButton: SharedValue<ActiveButton>) {
+  return useAnimatedStyle(() => ({
+    transform: [
+      {
+        scale: withSpring(activeButton.value === key ? 1.1 : 1, {
+          damping: 12,
+          stiffness: 200,
+        }),
+      },
+    ],
+    opacity: withTiming(activeButton.value !== null && activeButton.value !== key ? 0.2 : 1, {
+      duration: 180,
+    }),
+  }));
+}
 
 export default function Home() {
   const navigation = useNavigation<HomeNavigationProp>();
@@ -24,30 +42,8 @@ export default function Home() {
   const styles = useMemo(() => makeStyles(c), [c]);
 
   const activeButton = useSharedValue<ActiveButton>(null);
-
-  const helloAnimStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        scale: withSpring(activeButton.value === 'hello' ? 1.1 : 1, {
-          damping: 12,
-          stiffness: 200,
-        }),
-      },
-    ],
-    opacity: withTiming(activeButton.value === 'dog' ? 0.2 : 1, { duration: 180 }),
-  }));
-
-  const dogAnimStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        scale: withSpring(activeButton.value === 'dog' ? 1.1 : 1, {
-          damping: 12,
-          stiffness: 200,
-        }),
-      },
-    ],
-    opacity: withTiming(activeButton.value === 'hello' ? 0.2 : 1, { duration: 180 }),
-  }));
+  const helloAnimStyle = useButtonAnimStyle('hello', activeButton);
+  const dogAnimStyle = useButtonAnimStyle('dog', activeButton);
 
   const handleHelloPress = async () => {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -73,6 +69,8 @@ export default function Home() {
             activeButton.value = null;
           }}
           onPress={handleHelloPress}
+          accessibilityLabel="Hello Metal"
+          accessibilityRole="button"
         >
           <Text style={styles.buttonText}>Hello Metal</Text>
         </Pressable>
@@ -91,6 +89,8 @@ export default function Home() {
             activeButton.value = null;
           }}
           onPress={handleDogPress}
+          accessibilityLabel="Navigate to dog screen"
+          accessibilityRole="button"
         >
           <Text style={[styles.buttonText, styles.dogButtonText]}>DOG</Text>
         </Pressable>
@@ -99,7 +99,7 @@ export default function Home() {
   );
 }
 
-function makeStyles(c: (typeof colors)['light' | 'dark']) {
+function makeStyles(c: Colors) {
   return StyleSheet.create({
     container: {
       flex: 1,
