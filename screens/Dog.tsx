@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 export default function Dog() {
@@ -8,7 +8,7 @@ export default function Dog() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const fetchDog = async () => {
+  const fetchDog = useCallback(async () => {
     setLoading(true);
     setError(false);
     try {
@@ -20,12 +20,11 @@ export default function Dog() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: fetchDog is stable and only runs on mount
   useEffect(() => {
     fetchDog();
-  }, []);
+  }, [fetchDog]);
 
   return (
     <View style={styles.container}>
@@ -46,7 +45,11 @@ export default function Dog() {
         </Pressable>
 
         <Pressable
-          style={({ pressed }) => [styles.button, styles.backButton, pressed && styles.buttonPressed]}
+          style={({ pressed }) => [
+            styles.button,
+            styles.backButton,
+            pressed && styles.buttonPressed,
+          ]}
           onPress={() => navigation.goBack()}
         >
           <Text style={styles.buttonText}>Back</Text>

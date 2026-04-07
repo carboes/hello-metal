@@ -18,11 +18,13 @@ A minimal React Native app built with Expo. Features a Hello Metal button with h
 > Haptics require a real device. The simulator will run the app but won't vibrate.
 
 1. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 2. **Start the dev server**
+
    ```bash
    npx expo start
    ```
@@ -40,14 +42,17 @@ A development build gives you a fully native binary with all native modules. Req
 ### iOS
 
 1. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 2. **Install CocoaPods**
+
    ```bash
    npx expo run:ios
    ```
+
    This will install pods and build the app automatically. On first run it may take a few minutes.
 
 3. To target a specific simulator:
@@ -59,6 +64,7 @@ A development build gives you a fully native binary with all native modules. Req
 ### Android
 
 1. **Install dependencies**
+
    ```bash
    npm install
    ```
@@ -85,10 +91,10 @@ A development build gives you a fully native binary with all native modules. Req
 
 ## Screens
 
-| Screen | Description |
-|--------|-------------|
-| **Home** | Hello Metal button (haptic + alert) and a DOG button that navigates to the dog screen |
-| **Dog** | Fetches and displays a random dog image from [dog.ceo](https://dog.ceo/dog-api/). Tap "New Dog" for another one |
+| Screen   | Description                                                                                                     |
+| -------- | --------------------------------------------------------------------------------------------------------------- |
+| **Home** | Hello Metal button (haptic + alert) and a DOG button that navigates to the dog screen                           |
+| **Dog**  | Fetches and displays a random dog image from [dog.ceo](https://dog.ceo/dog-api/). Tap "New Dog" for another one |
 
 ---
 
