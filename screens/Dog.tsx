@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useMemo } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -10,41 +11,38 @@ import {
   View,
 } from 'react-native';
 
+import type { RootStackParamList } from '../App';
+import { useDogImage } from '../hooks/useDogImage';
+import type { Colors } from '../theme';
 import { colors } from '../theme';
 
+type DogNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Dog'>;
+
 export default function Dog() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<DogNavigationProp>();
   const scheme = useColorScheme() ?? 'light';
   const c = colors[scheme];
   const styles = useMemo(() => makeStyles(c), [c]);
 
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  const fetchDog = useCallback(async () => {
-    setLoading(true);
-    setError(false);
-    try {
-      const res = await fetch('https://dog.ceo/api/breeds/image/random');
-      const data = await res.json();
-      setImageUrl(data.message);
-    } catch {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchDog();
-  }, [fetchDog]);
+  const { imageUrl, loading, error, fetch } = useDogImage();
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         {loading && <ActivityIndicator size="large" color={c.dogButton} />}
-        {!loading && error && <Text style={styles.errorText}>Failed to load dog. Try again!</Text>}
+        {!loading && error && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>Failed to load dog.</Text>
+            <Pressable
+              style={({ pressed }) => [styles.retryButton, pressed && styles.buttonPressed]}
+              onPress={fetch}
+              accessibilityLabel="Retry loading dog image"
+              accessibilityRole="button"
+            >
+              <Text style={styles.retryButtonText}>Retry</Text>
+            </Pressable>
+          </View>
+        )}
         {!loading && imageUrl && (
           <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
         )}
@@ -52,8 +50,15 @@ export default function Dog() {
 
       <View style={styles.actions}>
         <Pressable
-          style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
-          onPress={fetchDog}
+          style={({ pressed }) => [
+            styles.button,
+            loading && styles.buttonDisabled,
+            pressed && !loading && styles.buttonPressed,
+          ]}
+          onPress={fetch}
+          disabled={loading}
+          accessibilityLabel="Load a new random dog image"
+          accessibilityRole="button"
         >
           <Text style={styles.buttonText}>New Dog</Text>
         </Pressable>
@@ -65,6 +70,8 @@ export default function Dog() {
             pressed && styles.buttonPressed,
           ]}
           onPress={() => navigation.goBack()}
+          accessibilityLabel="Go back to home screen"
+          accessibilityRole="button"
         >
           <Text style={[styles.buttonText, styles.backButtonText]}>Back</Text>
         </Pressable>
@@ -73,7 +80,7 @@ export default function Dog() {
   );
 }
 
-function makeStyles(c: (typeof colors)['light' | 'dark']) {
+function makeStyles(c: Colors) {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -96,10 +103,25 @@ function makeStyles(c: (typeof colors)['light' | 'dark']) {
       width: '100%',
       height: '100%',
     },
+    errorContainer: {
+      alignItems: 'center',
+      gap: 12,
+    },
     errorText: {
       color: c.error,
       fontSize: 16,
       textAlign: 'center',
+    },
+    retryButton: {
+      backgroundColor: c.dogButton,
+      paddingVertical: 10,
+      paddingHorizontal: 24,
+      borderRadius: 8,
+    },
+    retryButtonText: {
+      color: c.dogButtonText,
+      fontSize: 14,
+      fontWeight: '700',
     },
     actions: {
       flexDirection: 'row',
@@ -118,6 +140,9 @@ function makeStyles(c: (typeof colors)['light' | 'dark']) {
     },
     backButton: {
       backgroundColor: c.backButton,
+    },
+    buttonDisabled: {
+      opacity: 0.4,
     },
     buttonPressed: {
       opacity: 0.75,

@@ -2,8 +2,7 @@
 
 A minimal React Native app built with Expo. Features a Hello Metal button with haptic feedback, stagger/press animations, and a random dog image screen.
 
-
-## Assesment Deliverables 
+## Assesment Deliverables
 
 ### Android — Preview Build
 
@@ -20,6 +19,7 @@ Or scan the QR code to open the build page on your device:
 **[Google Drive Folder Link](https://drive.google.com/drive/folders/1XF6ik5rEGvLyPMVAI4H8PJQhJ1rqapEd?usp=drive_link)**
 
 ### Bonus work done
+
 - iOS working on simulator
 - App Icon
 - Light + Dark mode (according to System settings)
@@ -116,10 +116,10 @@ Works on both **iOS and Android**. The app runs fully in Expo Go — navigation,
 
 ## Screens
 
-| Screen   | Description                                                                                                     |
-| -------- | --------------------------------------------------------------------------------------------------------------- |
+| Screen   | Description                                                                                                                      |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | **Home** | Hello Metal button (haptic + alert) and a DOG button. Buttons stagger in on load; pressing one scales it up and fades the other. |
-| **Dog**  | Fetches and displays a random dog image from [dog.ceo](https://dog.ceo/dog-api/). Tap "New Dog" for another one. |
+| **Dog**  | Fetches and displays a random dog image from [dog.ceo](https://dog.ceo/dog-api/). Tap "New Dog" for another one.                 |
 
 ---
 
