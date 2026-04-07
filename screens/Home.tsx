@@ -1,39 +1,17 @@
+import { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Haptics from 'expo-haptics';
-import { useMemo } from 'react';
 import { Alert, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import Animated, {
-  FadeInDown,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
-import type { SharedValue } from 'react-native-reanimated';
+import Animated, { FadeInDown, useSharedValue } from 'react-native-reanimated';
 
 import type { RootStackParamList } from '../App';
 import type { Colors } from '../theme';
 import { colors } from '../theme';
+import { useButtonAnimStyle } from '../hooks/useButtonAnimStyle';
 
 type HomeNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 type ActiveButton = 'hello' | 'dog' | null;
-
-function useButtonAnimStyle(key: ActiveButton, activeButton: SharedValue<ActiveButton>) {
-  return useAnimatedStyle(() => ({
-    transform: [
-      {
-        scale: withSpring(activeButton.value === key ? 1.1 : 1, {
-          damping: 12,
-          stiffness: 200,
-        }),
-      },
-    ],
-    opacity: withTiming(activeButton.value !== null && activeButton.value !== key ? 0.2 : 1, {
-      duration: 180,
-    }),
-  }));
-}
 
 export default function Home() {
   const navigation = useNavigation<HomeNavigationProp>();
@@ -42,8 +20,8 @@ export default function Home() {
   const styles = useMemo(() => makeStyles(c), [c]);
 
   const activeButton = useSharedValue<ActiveButton>(null);
-  const helloAnimStyle = useButtonAnimStyle('hello', activeButton);
-  const dogAnimStyle = useButtonAnimStyle('dog', activeButton);
+  const helloAnimStyle = useButtonAnimStyle<ActiveButton>('hello', activeButton);
+  const dogAnimStyle = useButtonAnimStyle<ActiveButton>('dog', activeButton);
 
   const handleHelloPress = async () => {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
