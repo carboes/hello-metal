@@ -2,6 +2,26 @@
 
 A minimal React Native app built with Expo. Features a Hello Metal button with haptic feedback, stagger/press animations, and a random dog image screen.
 
+
+## Assesment Deliverables 
+
+### Android — Preview Build
+
+A pre-built Android APK is available to install directly:
+
+**[Download Android Preview Build](https://expo.dev/accounts/carboes/projects/hello-metal/builds/739d795c-6a60-48c8-afd7-a7c53d3f8a95)**
+
+### Video showing development
+
+**[Google Drive Folder Link](https://drive.google.com/drive/folders/1XF6ik5rEGvLyPMVAI4H8PJQhJ1rqapEd?usp=drive_link)**
+
+###
+Bonus work done
+- App Icon
+- Simple animations for Buttons on home screen
+- Linting/prettier
+- Additional TODO work in [TODO.md](./TODO.md)
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v18 or newer)
@@ -17,11 +37,7 @@ A minimal React Native app built with Expo. Features a Hello Metal button with h
 
 A development build is the preferred way to run this app. It includes all native modules (Reanimated 4, haptics) and gives you the full experience.
 
-### Android — Preview Build
 
-A pre-built Android APK is available to install directly:
-
-**[Download Android Preview Build](https://expo.dev/accounts/carboes/projects/hello-metal/builds/0cec4457-03df-4930-a6d0-046865ff8961)**
 
 ### Build from source
 
@@ -106,7 +122,6 @@ Works on both **iOS and Android**. The app runs fully in Expo Go — navigation,
 
 ## Notes
 
-- **Animations** require a development build. Reanimated 4 + `react-native-worklets` are not supported in Expo Go — all other features work fine in Expo Go on iOS and Android.
 - **Haptics** only work on physical devices. Calls are silently ignored on simulators/emulators.
 - The app supports **light and dark mode** automatically from system settings.
 - The app uses React Navigation native stack, so iOS users get native header transitions out of the box.
