@@ -1,6 +1,6 @@
 # Hello Metal
 
-A minimal React Native app built with Expo. Features a Hello Metal button with haptic feedback and a random dog image screen.
+A minimal React Native app built with Expo. Features a Hello Metal button with haptic feedback, stagger/press animations, and a random dog image screen.
 
 ## Prerequisites
 
@@ -13,9 +13,53 @@ A minimal React Native app built with Expo. Features a Hello Metal button with h
 
 ---
 
-## Option 1 — Expo Go (quickest)
+## Option 1 — Development Build (recommended)
 
-> Haptics require a real device. The simulator will run the app but won't vibrate.
+A development build is the preferred way to run this app. It includes all native modules (Reanimated 4, haptics) and gives you the full experience.
+
+### Android — Preview Build
+
+A pre-built Android APK is available to install directly:
+
+**[Download Android Preview Build](https://expo.dev/accounts/carboes/projects/hello-metal/builds/0cec4457-03df-4930-a6d0-046865ff8961)**
+
+### Build from source
+
+**iOS**
+
+```bash
+npm install
+npx expo run:ios
+```
+
+This installs CocoaPods and builds the app automatically. On first run it may take a few minutes. To target a specific simulator or device:
+
+```bash
+npx expo run:ios --device
+```
+
+**Android**
+
+```bash
+npm install
+npx expo run:android
+```
+
+Requires Android Studio with at least one AVD (emulator) set up, or a physical device connected via USB with developer mode enabled.
+
+**EAS cloud build**
+
+```bash
+eas build --profile development --platform ios
+# or
+eas build --profile development --platform android
+```
+
+---
+
+## Option 2 — Expo Go (limited)
+
+> ⚠️ **Animations do not work in Expo Go.** The app uses Reanimated 4 which requires native modules that Expo Go does not bundle. Use a development build for the full experience.
 
 1. **Install dependencies**
 
@@ -35,55 +79,15 @@ A minimal React Native app built with Expo. Features a Hello Metal button with h
 
 ---
 
-## Option 2 — Development Build (full native)
-
-A development build gives you a fully native binary with all native modules. Required if you want to run on a simulator/emulator or need features beyond what Expo Go supports.
-
-### iOS
-
-1. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-2. **Install CocoaPods**
-
-   ```bash
-   npx expo run:ios
-   ```
-
-   This will install pods and build the app automatically. On first run it may take a few minutes.
-
-3. To target a specific simulator:
-   ```bash
-   npx expo run:ios --device
-   ```
-   Then select your simulator or connected device from the list.
-
-### Android
-
-1. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-2. **Build and launch**
-   ```bash
-   npx expo run:android
-   ```
-   Make sure you have Android Studio installed with at least one AVD (emulator) set up, or a physical device connected via USB with developer mode enabled.
-
----
-
 ## Project structure
 
 ```
 ├── App.tsx              # Root component — navigation container + stack
 ├── index.ts             # Entry point
+├── theme.ts             # Light/dark color tokens
+├── babel.config.js      # Babel config with react-native-worklets plugin
 ├── screens/
-│   ├── Home.tsx         # Hello Metal button + DOG button
+│   ├── Home.tsx         # Hello Metal button + DOG button with animations
 │   └── Dog.tsx          # Random dog image fetched from dog.ceo API
 ├── app.json             # Expo app config
 └── package.json
@@ -93,13 +97,15 @@ A development build gives you a fully native binary with all native modules. Req
 
 | Screen   | Description                                                                                                     |
 | -------- | --------------------------------------------------------------------------------------------------------------- |
-| **Home** | Hello Metal button (haptic + alert) and a DOG button that navigates to the dog screen                           |
-| **Dog**  | Fetches and displays a random dog image from [dog.ceo](https://dog.ceo/dog-api/). Tap "New Dog" for another one |
+| **Home** | Hello Metal button (haptic + alert) and a DOG button. Buttons stagger in on load; pressing one scales it up and fades the other. |
+| **Dog**  | Fetches and displays a random dog image from [dog.ceo](https://dog.ceo/dog-api/). Tap "New Dog" for another one. |
 
 ---
 
 ## Notes
 
+- **Animations** require a development build. Reanimated 4 + `react-native-worklets` are not supported in Expo Go.
 - **Haptics** only work on physical devices. Calls are silently ignored on simulators/emulators.
+- The app supports **light and dark mode** automatically from system settings.
 - The app uses React Navigation native stack, so iOS users get native header transitions out of the box.
 - New Architecture (`newArchEnabled: true`) is enabled in `app.json`.
