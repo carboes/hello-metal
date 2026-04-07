@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "hello-metal",
+    "name": "Hello Metal",
     "slug": "hello-metal",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/hello-metal-icon-1024.png",
+    "icon": "./assets/hello-m-icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/hello-m-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/hello-metal-adaptive-foreground-1024.png",
+        "foregroundImage": "./assets/hello-m-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
