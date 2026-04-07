@@ -1,14 +1,14 @@
-import { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Haptics from 'expo-haptics';
+import { useMemo } from 'react';
 import { Alert, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import Animated, { FadeInDown, useSharedValue } from 'react-native-reanimated';
 
 import type { RootStackParamList } from '../App';
+import { useButtonAnimStyle } from '../hooks/useButtonAnimStyle';
 import type { Colors } from '../theme';
 import { colors } from '../theme';
-import { useButtonAnimStyle } from '../hooks/useButtonAnimStyle';
 
 type HomeNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 type ActiveButton = 'hello' | 'dog' | null;
